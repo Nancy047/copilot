@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import bot from "../assets/Bot.png";
 import send_icon from "../assets/sendIcon.png";
-import Staricon from "/Users/support/Downloads/reference-bot/src/assets/staricon.png";
-import uploadIcon from "/Users/support/Downloads/reference-bot/src/assets/uploadIcon.png";
-import responseIcon from "/Users/support/Downloads/reference-bot/src/assets/response-icon.png"
-import voice from "/Users/support/Downloads/reference-bot/src/assets/Audio.png";
+import Staricon from '../assets/staricon.png';
+import uploadIcon from '../assets/uploadIcon.png';
+import responseIcon from '../assets/response-icon.png';
+import voice from '../assets/Audio.png';
 
 
 

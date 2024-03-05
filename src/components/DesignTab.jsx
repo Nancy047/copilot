@@ -5,11 +5,11 @@ import Sidemenu from "../components/Sidemenu";
 import Chat from "./Chat";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import send_icon from "../assets/sendIcon.png";
-import Staricon from "/assets/staricon.png";
-import uploadIcon from "/assets/uploadIcon.png";
+import Staricon from "../assets/staricon.png";
+import uploadIcon from "../assets/uploadIcon.png";
 import "../styles/designtab.css";
 import Imagechat from "./Imagechat";
-import responseIcon from "/assets/response-icon.png";
+import responseIcon from "../assets/response-icon.png";
 import Upload from "../components/Upload";
 
 const DesignTab = () => {

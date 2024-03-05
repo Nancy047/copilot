@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import bot from "../assets/Bot.png";
 import send_icon from "../assets/sendIcon.png";
-import Staricon from "/assets/staricon.png";
-import uploadIcon from "/assets/uploadIcon.png";
-import responseIcon from "/assets/response-icon.png";
-import voice from "/assets/Audio.png";
+import Staricon from "../assets/staricon.png";
+import uploadIcon from "../assets/uploadIcon.png";
+import responseIcon from "../assets/response-icon.png";
+import voice from "../assets/Audio.png";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 import prompt1 from "../assets/Graph.svg";

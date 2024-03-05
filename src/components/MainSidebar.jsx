@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import Sidebar from "./Sidemenu";"/styles/Sidebar.scss";
+import Sidebar from "/styles/Sidebar.scss";
 
 import { RiHome2Fill } from "react-icons/ri";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { FaLaptopCode } from "react-icons/fa";
 
-import Staricon from "/assets/staricon.png";
+import Staricon from "../assets/staricon.png";
 
 const SideBar = () => {
   return (

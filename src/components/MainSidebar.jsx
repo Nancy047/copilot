@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import '../styles/Sidebar.scss';
+import "/Users/support/Downloads/reference-bot/src/styles/Sidebar.scss";
 
 import { RiHome2Fill } from "react-icons/ri";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { FaLaptopCode } from "react-icons/fa";
 
-import Staricon from '../assets/staricon.png'
+import Staricon from "/Users/support/Downloads/reference-bot/src/assets/staricon.png";
 
 const SideBar = () => {
   return (
@@ -18,20 +18,23 @@ const SideBar = () => {
               <span className="side-icons">
                 <img src={Staricon}></img>
               </span>{" "}
-              Popular
+              History
             </a>
           </div>
           <div className="Content">
             <a href="#" className="sub_content">
-              Answer Question
+              Code for to-do list application
             </a>
             <a href="#" className="sub_content">
-              Code Generator
+              check for code optimization
+            </a>
+            <a href="#" className="sub_content">
+              Generate test case for below code
             </a>
           </div>
         </div>
 
-        <div className="main_Content">
+        {/* <div className="main_Content">
           <div className="main_heading">
             <a href="#" className="sub_headig">
               <span className="side-icons">
@@ -70,7 +73,7 @@ const SideBar = () => {
               Code Convertor
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

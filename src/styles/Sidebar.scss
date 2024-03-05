@@ -123,15 +123,15 @@
   line-height: 27px;
   letter-spacing: 0em;
   text-align: left;
+  border-bottom: 1px solid #333;
 }
 
 .sub_content:hover {
   background: #6a114d;
   color: white;
   border-radius: 5px;
-  width: 120%;
-  text-align: center;
-  height: 30px;
+  text-align: left;
+  padding: 5%;
 }
 
 nav_container a {

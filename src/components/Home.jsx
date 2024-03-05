@@ -5,7 +5,7 @@ import Sidemenu from "../components/Sidemenu"
 import Chat from "./Chat";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-export const Home = () => {
+const Home = () => {
   const [conversation, setConversation] = useState([]);
   const [webSocket, setWebSocket] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,7 @@ export const Home = () => {
       return;
     }
     const socket = new W3CWebSocket("ws://34.122.87.129:8000/ws");
+    
     socket.onopen = function (event) {
       console.log('Connected to server. Start chatting! Type "quit" to exit.');
       setWebSocket(socket);
@@ -160,10 +161,10 @@ export const Home = () => {
         webSocket.readyState === WebSocket.OPEN &&
         message.trim() !== ""
       ) {
-        if (conversation.length === 0) {
-          console.log(message, conversation);
-          webSocket.send(new Date().valueOf());
-        }
+        // if (conversation.length === 0) {
+        //   console.log(message, conversation);
+        //   webSocket.send(new Date().valueOf());
+        // }
         webSocket.send(message);
         if (message.toLowerCase() === "quit") {
           webSocket.close();
@@ -218,3 +219,4 @@ export const Home = () => {
     </div>
   );
 };
+export default Home;

@@ -9,7 +9,6 @@ body {
 
   .home_body {
     display: flex;
-    justify-content: space-between;
   }
 }
 
@@ -493,10 +492,11 @@ td {
 
 .Dropdown-group {
   padding: 18px 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    /* gap: 15px; */
+    margin-left: 20px;
 }
 
 .Dropdown-1 {
@@ -508,7 +508,7 @@ td {
   height: 40px;
   padding: 10px 22px;
   line-height: 15px;
-  font-size: 16px;
+  font-size: 14px;
   width: 100%;
   -webkit-appearance: none;
   appearance: none;
@@ -540,6 +540,7 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cardd_container {
@@ -547,7 +548,7 @@ td {
   flex-direction: column;
   width: 25%;
   padding: 15px;
-  height: 75%;
+  height: 40%;
   cursor: pointer;
 
   margin: 10px;
@@ -641,3 +642,19 @@ input#search-bar {
 
 }
 
+.card-suggestion{
+    width: 100%;
+    text-wrap: wrap;
+    font-size: 16px;
+}
+
+.copy_code{
+    display: flex;
+    justify-content: flex-end;
+}
+.copy_btn{
+  color: white;
+  background-color: #7f265b;
+  padding: 5px;
+  border-radius: 5px;
+}

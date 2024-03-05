@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
-import "../styles/Side.css"
+import MainSidebar from "./MainSidebar";
+import Sidemenu from "../components/Sidemenu";
+import Chat from "./Chat";
+
+import "../styles/Side.css";
 import {
   FaHome,
   FaFileAlt,
@@ -10,14 +15,21 @@ import {
   FaBell,
   FaCog,
   FaUser,
+  FaFile,
 } from "react-icons/fa";
-
 
 import Logo from "./Logo";
 
 import { FiLayers } from "react-icons/fi";
 
-const Sidebar = () => { 
+const Sidebar = () => {
+  const handleDesign = () => {
+    navigate("/design");
+    SetCurrentTab("design");
+  };
+
+  const [currentTab, SetCurrentTab] = useState("codeyy");
+  const navigate = useNavigate();
   return (
     <div className="sidebar">
       {/* Logo */}
@@ -29,15 +41,18 @@ const Sidebar = () => {
       {/* Sidebar Items */}
 
       <div className="sidebar-items">
-        <SidebarItem icon={<FaHome />} label="Home" />
+        <div onClick={() => navigate("/")}>
+          <SidebarItem icon={<FaCode />} label="Coding" />
+        </div>
 
-        <SidebarItem icon={<FaFileAlt />} label="Document" />
+        <div onClick={() => handleDesign()}>
+          <SidebarItem icon={<FaPalette />} label="Design" />
+        </div>
 
-        <SidebarItem icon={<FaPalette />} label="Design" />
-
-        <SidebarItem icon={<FaCode />} label="Coding" />
+        <SidebarItem icon={<FaFileAlt />} label="Requirement" />
 
         <SidebarItem icon={<FiLayers />} label="Testing" />
+        <SidebarItem icon={<FaFile />} label="Deployment" />
 
         <SidebarItem icon={<FaBell />} label="Notification" />
       </div>

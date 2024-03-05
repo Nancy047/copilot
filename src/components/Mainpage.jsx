@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../Components/Sidebar";
-import Sidemenu from "../Components/Sidemenu";
+import Sidemenu from "../components/Sidemenu"
 import ChatPage from "/Users/support/Desktop/Codeyy/codeyy/src/Components/ChatPage.jsx";
 import "../Styles/Mainpage.scss";
 import headingIcon from "/Users/support/Desktop/Codeyy/codeyy/src/Assets/headingicon.png";

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import bot from "../assets/Bot.png";
 import send_icon from "../assets/sendIcon.png";
-import Staricon from '../assets/staricon.png';
-import uploadIcon from '../assets/uploadIcon.png';
-import responseIcon from '../assets/response-icon.png';
-import voice from '../assets/Audio.png';
-
-
+import Staricon from "/Users/support/Downloads/reference-bot/src/assets/staricon.png";
+import uploadIcon from "/Users/support/Downloads/reference-bot/src/assets/uploadIcon.png";
+import responseIcon from "/Users/support/Downloads/reference-bot/src/assets/response-icon.png";
 
 import prompt1 from "../assets/Graph.svg";
 import prompt2 from "../assets/Password.svg";
@@ -35,14 +32,57 @@ const Chat = ({ data, submitData, loading, listData }) => {
   const handleCableHover = (cable) => {
     setSelectedCable(cable);
   };
+  const [textToCopy, setTextToCopy] = useState("");
+  const [isCopied, setIsCopied] = useState(false);
+  console.log(listData,"jerrald");
+
+
+
+
+
+    const listConversationRef = useRef(null);
+  
+  
+  
+    useEffect(() => {
+  
+      // Scroll to the bottom of the list_conversation container whenever listData changes
+  
+      if (listConversationRef.current) {
+  
+        listConversationRef.current.scrollTop =
+  
+          listConversationRef.current.scrollHeight;
+  
+      }
+  
+    }, [listData]);
+    
+
+
+
+
+  const handleCopy = (text) => {
+    setTextToCopy(text)
+    navigator.clipboard.writeText(text)
+         .then(() => setIsCopied(true))
+         .catch(err => console.error('Failed to copy:', err));
+    
+     };
 
   const handleButtonClick = (buttonNumber) => {
     // Handle the button click logic here
     console.log(`Button ${buttonNumber} clicked`);
     // You can add more logic or communicate with the parent component as needed
   };
+  console.log("sanjay", textToCopy)
 
   useEffect(() => {
+    
+
+
+
+
     // Check if the trigger phrase is typed
     if (inputText.toLowerCase().includes("card details")) {
       setIsCardDetailsRequested(true);
@@ -53,20 +93,33 @@ const Chat = ({ data, submitData, loading, listData }) => {
 
   const [course, setCourse] = useState([
     {
-      courseheading: "Generate code for a  simple to-do list application",
-      desc: "The code generator will create the necessary HTML, CSS, and JavaScript files to implement a basic to-do list web application. ",
+      courseheading: "Create code for a  simple to-do list application",
+      desc: "The code generator will create the necessary HTML, CSS, and JavaScript and python files to implement a basic to-do list web application. ",
       follow: true,
       image: prompt1,
     },
     {
-      courseheading: "Check Cable supported for the cabinet",
-      desc: "The code generator will create the necessary HTML, CSS, and JavaScript files to implement a basic to-do list web application. ",
+      courseheading: "Code Translation",
+      desc: "Code translation facilitates the conversion of code written in one programming language into another, preserving functionality and structure.",
       follow: true,
       image: prompt2,
     },
     {
-      courseheading: "Product search using URL",
-      desc: "The code generator will create the necessary HTML, CSS, and JavaScript files to implement a basic to-do list web application. ",
+      courseheading: "Test Case Generation",
+      desc: "Test case generation involves creating input data and conditions to assess the functionality and behavior of software applications, ensuring comprehensive coverage of various scenarios and potential edge cases.",
+      follow: true,
+      image: prompt3,
+    },
+    {
+      courseheading: "Code Optimization",
+      desc: "Code optimization aims to improve the efficiency, speed, and resource utilization of software programs by refining algorithms, reducing redundant operations, and minimizing memory usage"
+      ,
+      follow: true,
+      image: prompt3,
+    },
+    {
+      courseheading: "Comment Generation",
+      desc: "Test case generation involves creating input data and conditions to assess the functionality and behavior of software applications, ensuring comprehensive coverage of various scenarios and potential edge cases.",
       follow: true,
       image: prompt3,
     },
@@ -281,7 +334,7 @@ const Chat = ({ data, submitData, loading, listData }) => {
 
   return (
     <div className="chatdata_container">
-      <div className="home_heading-content">
+      {/* <div className="home_heading-content">
         <div className="heading-content-1">
           <img src={Staricon}></img>
         </div>
@@ -292,18 +345,19 @@ const Chat = ({ data, submitData, loading, listData }) => {
             hands-on workshop
           </p>
         </div>
-      </div>
+      </div> */}
       {!isTyping && (
         <div className="Dropdown-group">
           <div className="Dropdown-1">
             <select>
-              <option>Generate code</option>
-              <option>select 2</option>
-              <option>select 3</option>
+              <option>LLM's</option>
+              <option>Codeyy</option>
+              <option>Open AI</option>
+              <option>AWS Azure</option>
             </select>
           </div>
 
-          <div className="Dropdown-1">
+          {/* <div className="Dropdown-1">
             <select>
               <option>Professional</option>
               <option>select 2</option>
@@ -317,8 +371,8 @@ const Chat = ({ data, submitData, loading, listData }) => {
               <option>select 2</option>
               <option>select 3</option>
             </select>
-          </div>
-        </div>
+      </div>*/}
+        </div> 
       )}
 
       <div className="conversation">
@@ -355,20 +409,16 @@ const Chat = ({ data, submitData, loading, listData }) => {
           </div>
         )}
         {listData.length > 0 && (
-          <div className="list_conversation">
+          <div className="list_conversation" ref={listConversationRef}>
             {console.log("coming", listData)}
             {listData.map((item, index) => {
               return (
                 <>
                   {item.type === "user" ? (
                     <div key={index} className={`chat-${item.type}`}>
-
                       <div className="chaticon-user">
-
-
                         <div className="user-text">{item.text}</div>
                         <div className="user_profile">SJ</div>
-
                       </div>
                     </div>
                   ) : (
@@ -387,7 +437,6 @@ const Chat = ({ data, submitData, loading, listData }) => {
                                     className={`chat-${item.type}`}
                                   >
                                     <div>
-                                      
                                       <div className="card-suggestion">
                                         According to the inventory data. This
                                         cabinet supports 48 Fibre Double jacked
@@ -582,15 +631,19 @@ const Chat = ({ data, submitData, loading, listData }) => {
                       ) : (
                         <>
                           <div className="bot_text">
-                          <div>
-                                  <img className="response-icon" src={responseIcon}></img>
-                                </div>
+                            <div>
+                              <img
+                                className="response-icon"
+                                src={responseIcon}
+                              ></img>
+                            </div>
                             <div key={index} className={`chat-${item.type}`}>
                               <div>
-                              
-                                <div className="card-suggestion">
+                                <div className="copy_code">{!isCopied ? (<button className="copy_btn" onClick={()=>handleCopy(item.text)}>copy code</button>):<span style={{color: 'grey',fontSize: '14px'}}>Copied!</span>}</div>
+                                <div><pre className="card-suggestion">
                                   {item.text}
-                                </div>
+                                </pre></div>
+                                
                               </div>
                             </div>
                           </div>
@@ -617,7 +670,6 @@ const Chat = ({ data, submitData, loading, listData }) => {
 
       <div className="textarea_container">
         <div className="input">
-         
           {defaultText && <p className="default_question">{defaultText} </p>}
           <input
             type="text"

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import bot from "../assets/Bot.png";
 import send_icon from "../assets/sendIcon.png";
-import Staricon from "/Users/support/Downloads/reference-bot/src/assets/staricon.png";
-import uploadIcon from "/Users/support/Downloads/reference-bot/src/assets/uploadIcon.png";
-import responseIcon from "/Users/support/Downloads/reference-bot/src/assets/response-icon.png";
+import Staricon from "/assets/staricon.png";
+import uploadIcon from "/assets/uploadIcon.png";
+import responseIcon from "/assets/response-icon.png";
 
 import prompt1 from "../assets/Graph.svg";
 import prompt2 from "../assets/Password.svg";

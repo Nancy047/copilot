@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: copilotui
+  labels:
+    app: copilotui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: copilotui
+  template:
+    metadata:
+      labels:
+        app: copilotui
+    spec:
+      containers:
+      - name: copilotui
+        image: copilotui:latest
+        ports:
+        - containerPort: 3000

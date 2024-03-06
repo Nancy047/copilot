@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Sidebar from "/styles/Sidebar.scss";
+import Sidebar from "../styles/Sidebar.scss";
 
 import { RiHome2Fill } from "react-icons/ri";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";

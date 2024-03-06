@@ -14,5 +14,6 @@ steps:
       - 'copilotui'
       - '--image=gcr.io/$PROJECT_ID/copilotui'
       - '--region=us-central1'
+      - '--allow-unauthenticated' 
 
 images: ['gcr.io/$PROJECT_ID/copilotui']

@@ -8,6 +8,7 @@ steps:
     args: ["push", "gcr.io/$PROJECT_ID/copilotui"]
 
   - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'Deploy'
     args:
       - 'run'
       - 'deploy'
@@ -17,3 +18,4 @@ steps:
       - '--allow-unauthenticated' 
 
 images: ['gcr.io/$PROJECT_ID/copilotui']
+

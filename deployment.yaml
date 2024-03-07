@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: copilotui
-        image: copilotui:latest
+        image: copilotui
         ports:
         - containerPort: 3000

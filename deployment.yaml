@@ -16,7 +16,6 @@ spec:
     spec:
       containers:
       - name: copilotui
-        image: copilotui
-        imagePullPolicy: Never
+        image: gcr.io/$PROJECT_ID/copilotui 
         ports:
         - containerPort: 3000

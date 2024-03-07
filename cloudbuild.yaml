@@ -7,5 +7,4 @@ steps:
   args: ["push", "gcr.io/$PROJECT_ID/copilotui"]
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args: ['apply', '--filename=deployment.yaml', '--namespace=default', '--cluster=b-ctl-dev-cluster', '--location=us-central1-c']
-- name: 'gcr.io/cloud-builders/gke-deploy'
-  args: ['apply', '--filename=service.yaml', '--namespace=default', '--cluster=b-ctl-dev-cluster', '--location=us-central1-c']
+

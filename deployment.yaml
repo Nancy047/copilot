@@ -16,6 +16,15 @@ spec:
     spec:
       containers:
       - name: copilotui
-        image: gcr.io/$PROJECT_ID/copilotui 
+        image: gcr.io/[PROJECT_ID]/copilotui  # Replace [PROJECT_ID] with your GCP project ID
         ports:
         - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /  # Use the root URL of your React application
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3

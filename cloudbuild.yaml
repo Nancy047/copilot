@@ -11,7 +11,7 @@ steps:
     entrypoint: 'bash'
     args: 
       - '-c'
-      - 'sed -i "s|image:.*|image: us-central1-docker.pkg.dev/lumen-b-ctl-047/b-ctl-047-artifact/copilot-bot:83d61b8987ed50602127c81ea71d1e1d5a209ac4|g" deployment.yaml'
+      - 'sed -i "s|image:.*|image: us-central1-docker.pkg.dev/lumen-b-ctl-047/b-ctl-047-artifact/copilotui|g" deployment.yaml'
 
   - name: 'gcr.io/cloud-builders/gke-deploy'
     args: ['apply', '--filename=deployment.yaml', '--namespace=default', '--cluster=b-ctl-dev-cluster', '--location=us-central1-c']

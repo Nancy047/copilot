@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: copilotui
-        image: gcr.io/$PROJECT_ID/copilotui:latest 
+        image: gcr.io/lumen-b-ctl-047/copilotui:latest 
         ports:
         - containerPort: 3000

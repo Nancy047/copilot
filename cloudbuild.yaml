@@ -21,9 +21,9 @@ steps:
     args:
       - 'apply'
       - '--filename=deployment.yaml'
-      - '--namespace=copilotui'
-      - '--cluster=default'
-      - '--location=us-central1-a'
+      - '--namespace=default'
+      - '--cluster=b-ctl-dev-cluster'
+      - '--location=us-central1-c'
 
 timeout: 2200s
 images: ['gcr.io/$PROJECT_ID/copilotui']

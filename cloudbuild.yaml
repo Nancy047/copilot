@@ -1,37 +1,37 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    id: 'Build Docker Image'
-    args: ['build','-t','gcr.io/lumen-b-ctl-047/copilotui','.']
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Build Docker Image'
+  args: ['build','-t','gcr.io/lumen-b-ctl-047/copilotui','.']
 
-  - name: 'gcr.io/cloud-builders/docker'
-    id: 'Docker Push'
-    args: ["push", "gcr.io/lumen-b-ctl-047/copilotui"]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Docker Push'
+  args: ["push", "gcr.io/lumen-b-ctl-047/copilotui"]
 
-  - name: 'gcr.io/cloud-builders/gke-deploy'
-    id: 'Prepare deploy'
-    args:
-      - 'prepare'
-      - '--image=gcr.io/lumen-b-ctl-047/copilotui'
-      - '--app=copilotui'
-      - '--namespace=default'
-      - '--output=output'
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  id: 'Prepare deploy'
+  args:
+    - 'prepare'
+    - '--image=gcr.io/lumen-b-ctl-047/copilotui'
+    - '--app=copilotui'
+    - '--namespace=default'
 
-  - name: 'gcr.io/cloud-builders/gke-deploy'
-    id: 'Apply deploy'
-    args:
-      - 'apply'
-      - '--filename=deployment.yaml'
-      - '--namespace=default'
-      - '--cluster=b-ctl-dev-cluster'
-      - '--location=us-central1-c'
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  id: 'Apply deploy'
+  args:
+    - 'apply'
+    - '--filename=deployment.yaml'
+    - '--namespace=default'
+    - '--cluster=b-ctl-dev-cluster'
+    - '--location=us-central1-c'
 
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args:
-      - 'apply'
-      - '-f'
-      - 'service.yaml'
-      - '--namespace=default'
-      - '--cluster=b-ctl-dev-cluster'
-      - '--context=gke_lumen-b-ctl-047_us-central1-c_b-ctl-dev-cluster'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'apply'
+  - '-f'
+  - 'k8s/service.yaml'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=b-ctl-dev-cluster'
+  - 'CLOUDSDK_PROJECT_ID=lumen-b-ctl-047'
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/copilotui']

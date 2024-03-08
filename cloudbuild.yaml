@@ -26,14 +26,12 @@ steps:
       - '--location=us-central1-c'
 
   - name: 'gcr.io/cloud-builders/kubectl'
-    env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
     args:
-      - apply
-      - -f
-      - service.yaml
-      - --namespace=default
-      - --cluster=b-ctl-dev-cluster
-      - --context=us-central1-c
+      - 'apply'
+      - '-f'
+      - 'service.yaml'
+      - '--namespace=default'
+      - '--cluster=b-ctl-dev-cluster'
+      - '--context=gke_lumen-b-ctl-047_us-central1-c_b-ctl-dev-cluster'
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/copilotui']

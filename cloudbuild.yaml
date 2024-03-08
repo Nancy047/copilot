@@ -34,6 +34,9 @@ steps:
       - '--namespace=default'
       - '--cluster=b-ctl-dev-cluster'
       - '--location=us-central1-c'
-
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/copilotui']
+env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=b-ctl-dev-cluster'

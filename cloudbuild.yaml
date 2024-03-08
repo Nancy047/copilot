@@ -25,5 +25,15 @@ steps:
       - '--cluster=b-ctl-dev-cluster'
       - '--location=us-central1-c'
 
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: 'Apply Service'
+    args:
+      - 'apply'
+      - '-f'
+      - 'service.yaml'
+      - '--namespace=default'
+      - '--cluster=b-ctl-dev-cluster'
+      - '--location=us-central1-c'
+
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/copilotui']

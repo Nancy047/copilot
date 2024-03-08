@@ -24,11 +24,15 @@ steps:
     - '--cluster=b-ctl-dev-cluster'
     - '--location=us-central1-c'
 
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Copy service.yaml'
+  args: ['cp', 'k8s/service.yaml', 'gcr.io/lumen-b-ctl-047/copilotui:/service.yaml']
+
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
   - 'apply'
   - '-f'
-  - 'k8s/service.yaml'
+  - '/service.yaml'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   - 'CLOUDSDK_CONTAINER_CLUSTER=b-ctl-dev-cluster'

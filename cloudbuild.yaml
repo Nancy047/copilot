@@ -25,5 +25,6 @@ steps:
       - '--cluster=b-ctl-dev-cluster'
       - '--location=us-central1-c'
 
+
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/cloudbuild']

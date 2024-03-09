@@ -2,11 +2,9 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build Docker Image'
     args: ['build','-t','gcr.io/lumen-b-ctl-047/cloudbuild','.']
-
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Docker Push'
     args: ["push", "gcr.io/lumen-b-ctl-047/cloudbuild"]
-
   - name: 'gcr.io/cloud-builders/gke-deploy'
     id: 'Prepare deploy'
     args:
@@ -15,7 +13,6 @@ steps:
       - '--app=cloudbuild'
       - '--namespace=default'
       - '--output=output'
-
   - name: 'gcr.io/cloud-builders/gke-deploy'
     id: 'Apply deploy'
     args:

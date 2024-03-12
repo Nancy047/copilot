@@ -14,6 +14,6 @@ steps:
       - '<container-name>=gcr.io/lumen-b-ctl-047/copilotui:latest'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=lumen-b-ctl-047'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=b-ctl-dev-cluster'
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/copilotui']

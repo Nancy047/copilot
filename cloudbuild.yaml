@@ -1,19 +1,18 @@
-steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    id: 'Build Docker Image'
-    args: ['build','-t','gcr.io/lumen-b-ctl-047/copilotui','.']
-  - name: 'gcr.io/cloud-builders/docker'
-    id: 'Docker Push'
-    args: ["push", "gcr.io/lumen-b-ctl-047/copilotui"]
-  - name: 'gcr.io/cloud-builders/kubectl'
-    id: 'Deploy current revision'
-    args:
-      - 'set'
-      - 'image'
-      - 'deployment.v1.apps/<app-name>'
-      - '<container-name>=gcr.io/lumen-b-ctl-047/copilotui:latest'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=b-ctl-dev-cluster'
-timeout: 2200s
-images: ['gcr.io/lumen-b-ctl-047/copilotui']
+0: gcr.io/cloud-builders/gcloud
+bash -c |
+  gcloud config set project lumen-b-ctl-047 && \
+  gcloud config set compute/region us-central1 && \
+  gcloud config set compute/zone us-central1-c && \
+  gcloud config set container/cluster b-ctl-dev-cluster
+
+1: gcr.io/cloud-builders/docker
+build -t us-central1-docker.pkg.dev/lumen-b-ctl-047/b-ctl-047-artifact/copilot-ui:$SHORT_SHA .
+
+2: gcr.io/cloud-builders/docker
+push us-central1-docker.pkg.dev/lumen-b-ctl-047/b-ctl-047-artifact/copilot-ui:$SHORT_SHA
+
+3: gcr.io/cloud-builders/gcloud
+bash -c "sed -i 's|image:.*|image: us-central1-docker.pkg.dev/lumen-b-ctl-047/b-ctl-047-artifact/copilot-ui:$SHORT_SHA|g' deployment.yaml"
+
+4: gcr.io/cloud-builders/gke-deploy
+apply --filename=deployment.yaml --namespace=default --cluster=b-ctl-dev-cluster --location=us-central1-c

@@ -14,13 +14,14 @@ steps:
       - '--namespace=default'
       - '--output=output'
   - name: 'gcr.io/cloud-builders/gke-deploy'
-    id: 'Apply deploy'
+    id: 'Deploy current revision'
     args:
-      - 'apply'
+      - 'set-image'
       - '--filename=deployment.yaml'
       - '--namespace=default'
       - '--cluster=b-ctl-dev-cluster'
       - '--location=us-central1-c'
+      - 'copilotui=gcr.io/lumen-b-ctl-047/copilotui:latest'
 
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/copilotui']

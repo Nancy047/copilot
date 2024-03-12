@@ -5,23 +5,15 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Docker Push'
     args: ["push", "gcr.io/lumen-b-ctl-047/copilotui"]
-  - name: 'gcr.io/cloud-builders/gke-deploy'
-    id: 'Prepare deploy'
-    args:
-      - 'prepare'
-      - '--image=gcr.io/lumen-b-ctl-047/copilotui'
-      - '--app=copilotui'
-      - '--namespace=default'
-      - '--output=output'
-  - name: 'gcr.io/cloud-builders/gke-deploy'
+  - name: 'gcr.io/cloud-builders/kubectl'
     id: 'Deploy current revision'
     args:
-      - 'set-image'
-      - '--filename=deployment.yaml'
-      - '--namespace=default'
-      - '--cluster=b-ctl-dev-cluster'
-      - '--location=us-central1-c'
-      - 'copilotui=gcr.io/lumen-b-ctl-047/copilotui:latest'
-
+      - 'set'
+      - 'image'
+      - 'deployment.v1.apps/<app-name>'
+      - '<container-name>=gcr.io/lumen-b-ctl-047/copilotui:latest'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=lumen-b-ctl-047'
 timeout: 2200s
 images: ['gcr.io/lumen-b-ctl-047/copilotui']

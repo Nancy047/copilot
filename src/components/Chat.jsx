@@ -4,6 +4,8 @@ import send_icon from "../assets/sendIcon.png";
 import Staricon from "../assets/staricon.png";
 import uploadIcon from "../assets/uploadIcon.png";
 import responseIcon from "../assets/response-icon.png";
+import "@fortawesome/fontawesome-free/css/all.css";
+import html2pdf from "html2pdf.js";
 
 import prompt1 from "../assets/Graph.svg";
 import prompt2 from "../assets/Password.svg";
@@ -15,8 +17,9 @@ import ProductCardList from "./PoductCard";
 import Terminal1 from "../assets/image 1.png";
 import Terminal2 from "../assets/image 2.png";
 import Terminal3 from "../assets/image 3.png";
+import course from '../components/Data/Prompt.json'
 
-const Chat = ({ data, submitData, loading, listData }) => {
+const Chat = ({ data, submitData, loading, listData, currentTab }) => {
   const [inputText, setInputText] = useState("");
   const [defaultText, setDefaultText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -34,55 +37,76 @@ const Chat = ({ data, submitData, loading, listData }) => {
   };
   const [textToCopy, setTextToCopy] = useState("");
   const [isCopied, setIsCopied] = useState(false);
-  console.log(listData,"jerrald");
+  console.log(listData, "jerrald");
 
+  const listConversationRef = useRef(null);
 
+  useEffect(() => {
+    // Scroll to the bottom of the list_conversation container whenever listData changes
 
-
-
-    const listConversationRef = useRef(null);
-  
-  
-  
-    useEffect(() => {
-  
-      // Scroll to the bottom of the list_conversation container whenever listData changes
-  
-      if (listConversationRef.current) {
-  
-        listConversationRef.current.scrollTop =
-  
-          listConversationRef.current.scrollHeight;
-  
-      }
-  
-    }, [listData]);
-    
-
-
-
+    if (listConversationRef.current) {
+      listConversationRef.current.scrollTop =
+        listConversationRef.current.scrollHeight;
+    }
+  }, [listData]);
 
   const handleCopy = (text) => {
-    setTextToCopy(text)
-    navigator.clipboard.writeText(text)
-         .then(() => setIsCopied(true))
-         .catch(err => console.error('Failed to copy:', err));
+    setTextToCopy(text);
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 1500);
+      })
+      .catch((err) => console.error("Failed to copy:", err));
+  };
+  const handleEdit = () => {
     
-     };
+  };
+
+  
+
+  const handleDownload = (text) => {
+    // Create a new div element to hold the text content and footer
+    const element = document.createElement("div");
+    element.innerHTML = `
+      <div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; white-space: pre-wrap; margin:30px 20px 20px 30px">
+        ${text}
+      </div>
+    `;
+
+    // Generate PDF from the styled content
+    const options = {
+      margin: 20,
+      filename: "brd_document.pdf",
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "pt", format: "letter", orientation: "portrait" },
+      onPageCreated: function (page) {
+        // Add page number to each page
+        const pageNumber = page.pageNumber;
+        const pageCount = listData.length; // Assuming listData represents the number of pages
+        const text = `Page ${pageNumber} of ${pageCount}`;
+        const canvas = page.canvas;
+        const context = canvas.getContext("2d");
+        context.font = "12px Arial";
+        context.fillStyle = "#666";
+        context.fillText(text, 40, canvas.height - 30);
+      },
+    };
+
+    html2pdf().set(options).from(element).save();
+  };
 
   const handleButtonClick = (buttonNumber) => {
     // Handle the button click logic here
     console.log(`Button ${buttonNumber} clicked`);
     // You can add more logic or communicate with the parent component as needed
   };
-  console.log("sanjay", textToCopy)
+  console.log("sanjay", textToCopy);
 
   useEffect(() => {
-    
-
-
-
-
     // Check if the trigger phrase is typed
     if (inputText.toLowerCase().includes("card details")) {
       setIsCardDetailsRequested(true);
@@ -91,39 +115,7 @@ const Chat = ({ data, submitData, loading, listData }) => {
     }
   }, [inputText]);
 
-  const [course, setCourse] = useState([
-    {
-      courseheading: "Create code for a  simple to-do list application",
-      desc: "The code generator will create the necessary HTML, CSS, and JavaScript and python files to implement a basic to-do list web application. ",
-      follow: true,
-      image: prompt1,
-    },
-    {
-      courseheading: "Code Translation",
-      desc: "Code translation facilitates the conversion of code written in one programming language into another, preserving functionality and structure.",
-      follow: true,
-      image: prompt2,
-    },
-    {
-      courseheading: "Test Case Generation",
-      desc: "Test case generation involves creating input data and conditions to assess the functionality and behavior of software applications, ensuring comprehensive coverage of various scenarios and potential edge cases.",
-      follow: true,
-      image: prompt3,
-    },
-    {
-      courseheading: "Code Optimization",
-      desc: "Code optimization aims to improve the efficiency, speed, and resource utilization of software programs by refining algorithms, reducing redundant operations, and minimizing memory usage"
-      ,
-      follow: true,
-      image: prompt3,
-    },
-    {
-      courseheading: "Comment Generation",
-      desc: "Test case generation involves creating input data and conditions to assess the functionality and behavior of software applications, ensuring comprehensive coverage of various scenarios and potential edge cases.",
-      follow: true,
-      image: prompt3,
-    },
-  ]);
+  
   const [isPrSelected, setIsPrSelected] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState({});
   const cableData = [
@@ -346,7 +338,7 @@ const Chat = ({ data, submitData, loading, listData }) => {
           </p>
         </div>
       </div> */}
-      {!isTyping && (
+      {!isTyping && !(currentTab === "requirement") && (
         <div className="Dropdown-group">
           <div className="Dropdown-1">
             <select>
@@ -372,11 +364,11 @@ const Chat = ({ data, submitData, loading, listData }) => {
               <option>select 3</option>
             </select>
       </div>*/}
-        </div> 
+        </div>
       )}
 
       <div className="conversation">
-        {!isTyping && (
+        {!isTyping && !(currentTab === "requirement") && (
           <div className="home_course_container">
             {course.map((cr) => {
               return (
@@ -639,11 +631,71 @@ const Chat = ({ data, submitData, loading, listData }) => {
                             </div>
                             <div key={index} className={`chat-${item.type}`}>
                               <div>
-                                <div className="copy_code">{!isCopied ? (<button className="copy_btn" onClick={()=>handleCopy(item.text)}>copy code</button>):<span style={{color: 'grey',fontSize: '14px'}}>Copied!</span>}</div>
-                                <div><pre className="card-suggestion">
-                                  {item.text}
-                                </pre></div>
-                                
+                                {currentTab === "requirement" && (
+                                  <div className="icon_container">
+                                    <button
+                                      className="edit_btn"
+                                      onClick={() => handleEdit(item)}
+                                    >
+                                      <i className="fas fa-edit"></i>{" "}
+                                      {/* Edit Icon */}
+                                    </button>
+                                    <button
+                                      className="download_btn"
+                                      onClick={() => handleDownload(item.text)}
+                                    >
+                                      <i className="fas fa-download"></i>{" "}
+                                      {/* Download Icon */}
+                                    </button>
+                                    {!isCopied ? (
+                                      <>
+                                        <button
+                                          className="copy_btn"
+                                          onClick={() => handleCopy(item.text)}
+                                        >
+                                          <i className="fas fa-copy"></i>{" "}
+                                          {/* Copy Icon */}
+                                          copy code
+                                        </button>
+                                      </>
+                                    ) : (
+                                      <span
+                                        style={{
+                                          color: "grey",
+                                          fontSize: "14px",
+                                        }}
+                                      >
+                                        Copied!
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                                {currentTab === "home" && (
+                                  <div className="copy_code">
+                                    {!isCopied ? (
+                                      <button
+                                        className="copy_btn"
+                                        onClick={() => handleCopy(item.text)}
+                                      >
+                                        copy code
+                                      </button>
+                                    ) : (
+                                      <span
+                                        style={{
+                                          color: "grey",
+                                          fontSize: "14px",
+                                        }}
+                                      >
+                                        Copied!
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                                <div>
+                                  <pre className="card-suggestion">
+                                    {item.text}
+                                  </pre>
+                                </div>
                               </div>
                             </div>
                           </div>

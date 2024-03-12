@@ -106,13 +106,14 @@ body {
       width: 98%;
       .default_question {
         width: auto;
+        border: 1px solid #fff;
+        font-size: 14px;
         color: #000000;
       }
       input {
         border: none;
         outline: none;
         width: auto;
-        min-width: 65%;
         margin-left: 10px;
       }
     }
@@ -657,4 +658,29 @@ input#search-bar {
   background-color: #7f265b;
   padding: 5px;
   border-radius: 5px;
+}
+
+.icon_container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.edit_btn,
+.download_btn {
+  cursor: pointer;
+  background-color: #fff;
+  border: none;
+  box-shadow: 2.121359348297119px 2.121359348297119px 4.242718696594238px 0px
+    #00000040;
+  margin-right: 10px; /* Adjust spacing between icons as needed */
+}
+
+.copy_icon {
+  color: blue; /* Adjust color for copy icon */
+}
+
+.edit_icon:hover,
+.copy_icon:hover {
+  color: #0066ff; /* Change color on hover */
 }

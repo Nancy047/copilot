@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import MainSidebar from "./MainSidebar";
-import Sidemenu from "../components/Sidemenu"
+import Sidemenu from "./Sidemenu"
 import Chat from "./Chat";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-const Home = () => {
+const Requirement = () => {
   const [conversation, setConversation] = useState([]);
   const [webSocket, setWebSocket] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [allData, setAllData] = useState([
-    {
-      title: "Part Number",
-      question: ["test"],
-      answer: ["test"],
-    },
-  ]);
+
   const [currentData, setCurrentData] = useState({});
   useEffect(() => {
     if (webSocket) {
       return;
     }
-    const socket = new W3CWebSocket("ws://34.122.87.129:8000/ws");
+    const socket = new W3CWebSocket("ws://34.122.87.129:8000/requirement");
     
     socket.onopen = function (event) {
       console.log('Connected to server. Start chatting! Type "quit" to exit.');
@@ -204,7 +199,7 @@ const Home = () => {
     <div className="home_container">
       {/* <Navbar /> */}
       <div className="home_body">
-        <Sidemenu currentTab={"home"}/>
+        <Sidemenu currentTab={"requirement"}/>
         <MainSidebar/>
 
         <div className="chat_container">
@@ -213,11 +208,11 @@ const Home = () => {
             loading={loading}
             data={currentData}
             listData={conversation}
-            currentTab={"home"}
+            currentTab={"requirement"}
           />
         </div>
       </div>
     </div>
   );
 };
-export default Home;
+export default Requirement;

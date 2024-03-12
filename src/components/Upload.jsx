@@ -1,168 +1,140 @@
 import React, { useState, useRef } from "react";
-import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import Tooltip from "@mui/material/Tooltip";
+import "../styles/upload.css";
 
-// import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
-const FileUpload = () => {
+const Upload = ({ uploadstatusfromchild, senddatatoparent }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
-
   const fileInputRef = useRef(null);
-  const [show, setShow] = useState(null);
- 
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [dragging, setDragging] = useState(false);
 
   const onFileChange = (event) => {
-    const newFiles = Array.from(event.target.files);
-
-    // Append new files to the existing array of files
-
-    setUploadedFiles((prevFiles) => [
-      ...prevFiles,
-
-      ...newFiles.map((file) => ({
-        name: file.name,
-
-        size: file.size,
-
-        url: URL.createObjectURL(file),
-      })),
-    ]);
+    const files = event.target.files;
+    setUploadedFiles([...uploadedFiles, ...files]);
   };
 
-  const handleUpload = async() => {
-
-    if (!uploadedFiles) {
-    
-    return;
+  const handleUpload = async () => {
+    if (uploadedFiles.length === 0) {
+      return;
     }
-    
 
     const formData = new FormData();
-    formData.append("file", uploadedFiles);
-    
-    console.log(formData, "formadata", uploadedFiles, "uploadfiles");
-
+    uploadedFiles.forEach((file) => formData.append("file", file));
+    console.log("formData",formData,uploadedFiles)
     try {
-    
-    const response = await axios.post("http://34.122.87.129:8000/upload", formData, {
-     
-    headers: {  
-    "Content-Type": "multipart/form-data",
-    }
-    });
-    
-    if (response.status == 200) {
-    
-    console.log(response, "succes uploadresponse");
- 
-    //alert('File uploaded successfully');
-    
-} else { 
-    alert("Upload failed");
-    }
+      const response = await axios.post(
+        "http://34.122.87.129:8000/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
+      if (response.status === 200) {
+        setUploadSuccess(true);
+        console.log(response, "success upload response");
+        setTimeout(() => {
+          setUploadSuccess(false);
+          setUploadedFiles([]);
+        }, 2000);
+        
+        senddatatoparent("uploaded successfully");
+      } else {
+        alert("Upload failed");
+      }
     } catch (error) {
-    
-    console.error("Error uploading file:", error);
-       
-    alert("An error occurred while uploading the file");  
-    
+      console.error("Error uploading file:", error);
+      alert("An error occurred while uploading the file");
     }
-}
-    
-    
+  };
 
   const deleteFile = (index) => {
-    const updatedFiles = [...uploadedFiles];
-
-    updatedFiles.splice(index, 1);
-
+    const updatedFiles = uploadedFiles.filter((_, i) => i !== index);
     setUploadedFiles(updatedFiles);
-    setShow(false);
   };
 
   const showFileInput = () => {
     fileInputRef.current.click();
-    setShow(true);
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragging(false);
+    const files = e.dataTransfer.files;
+    setUploadedFiles([...uploadedFiles, ...files]);
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <button style={uploadButtonStyles} onClick={showFileInput}>
-        Add Files
-      </button>
+    <div className="upload-container">
+      <div
+        className={`upload-card ${dragging ? "dragging" : ""}`}
+        onDragEnter={handleDragEnter}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <div className="upload-area" onClick={showFileInput}>
+          <p>Drag & Drop Files Here</p>
+          <span>or</span>
+          <span className="browse-link">Browse Files</span>
 
-      <input
-        type="file"
-        accept=".jpg, .jpeg, .png, .gif, .bmp, .pdf"
-        style={{ display: "none" }}
-        ref={fileInputRef}
-        multiple
-        onChange={onFileChange}
-      />
-
-      {uploadedFiles.length > 0 && (
-        <div style={fileListStyles}>
-          <div style={fileListContainerStyles}>
-            {uploadedFiles.map((file, index) => (
-              <div key={index} style={fileItemStyles}>
-                <div style={{ whiteSpace: "nowrap" }}>{file.name}</div>
-
-                <div
-                  onClick={() => deleteFile(index)}
-                  style={{ cursor: "pointer" }}
-                >
-                  x
+          <div className="file-list">
+          {uploadedFiles.map((file, index) => (
+            <div className="file-item" key={index}>
+              <div className="file-info">
+                <div>{file.name}</div>
+                <div style={{ color: "#ccc" }}>
+                  {(file.size / 1024).toFixed(2)} KB
                 </div>
               </div>
-            ))}
-          </div>
+              <div className="remove-icon" onClick={() => deleteFile(index)}>
+                <Tooltip title="Remove File" placement="left-start">
+                  <FontAwesomeIcon icon={faTimes} />
+                </Tooltip>
+              </div>
+            </div>
+          ))}
         </div>
-      )}
-      {show && <div className="click" onClick={handleUpload}>click here</div>}
+        </div>
+        <input
+          type="file"
+          style={{ display: "none" }}
+          ref={fileInputRef}
+          accept=".pdf"
+          multiple
+          onChange={onFileChange}
+        />
+       
+        {uploadedFiles.length > 0 && (
+          <button className="upload-button" onClick={handleUpload}>
+            Upload
+          </button>
+        )}
+        {loading && <div className="loading-indicator">Uploading...</div>}
+      </div>
     </div>
   );
 };
 
-const uploadButtonStyles = {
-  padding: "5px",
-
-  cursor: "pointer",
-
-  border: "none",
-
-  borderRadius: "5px",
-
-  backgroundColor: "#007bff",
-
-  color: "white",
-
-  fontSize: "16px",
-
-  margin: "10px",
-
-  height: "30px",
-  marginLeft: "3%",
-  border: "1px solid black",
-  height: "32px",
-  width: "94px",
-};
-
-const fileListStyles = {};
-
-const fileListContainerStyles = {
-  display: "flex",
-  flexDirection: "row",
-  gap: "10px",
-};
-
-const fileItemStyles = {
-  display: "flex",
-  alignItems: "center",
-  border: "1px solid #ccc",
-  borderRadius: "5px",
-  padding: "5px",
-  gap: "10px ",
-};
-
-export default FileUpload;
+export default Upload;

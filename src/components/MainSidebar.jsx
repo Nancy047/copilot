@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import Sidebar from "../styles/Sidebar.scss";
+import "../styles/Sidebar.scss";
 
 import { RiHome2Fill } from "react-icons/ri";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { FaLaptopCode } from "react-icons/fa";
+import prompt from '../components/Data/Prompt.json'
 
 import Staricon from "../assets/staricon.png";
 
@@ -12,6 +13,9 @@ const SideBar = () => {
     <div className="sidebar-main">
       <div className="sidebar-logo">Activity</div>
       <div className="nav_container">
+        <div className="side-prompts">
+          
+        </div>
         <div className="main_Content">
           <div className="main_heading">
             <a href="#" className="sub_headig">

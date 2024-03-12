@@ -16,43 +16,55 @@ const DesignTab = () => {
   const [inputText, setInputText] = useState("");
   const [defaultText, setDefaultText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [uploadStatus,setUploadStatus] = useState(false);
+
 
   const submitData = (message) => {
     console.log("ganesh", message);
   };
 
+  const senddatatoparent = (message)=>{
+    console.log("nithin",message);
+    if(message == "uploaded successfully"){
+      setUploadStatus(true);
+    }
+  
+  }
+  
   return (
     <div className="home_container">
       {/* <Navbar /> */}
       <div className="home_body">
-        <Sidemenu />
+        <Sidemenu currentTab={"design"} />
         <MainSidebar />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div className="chatdata_container">
-            <div className="bot_text">
-              <div>
-                <img className="response-icon" src={responseIcon}></img>
-              </div>
-              <div className="chat-bot">
+             {uploadStatus && <div className="bot_text">
                 <div>
+                  <img className="response-icon" src={responseIcon}></img>
+                </div>
+                <div className="chat-bot">
                   <div>
                     <div>
-                      <pre className="card-suggestion">
-                        Please upload your file in the attachment.
-                      </pre>
+                      <div>
+                        <pre className="card-suggestion">
+                          File Uploaded successfully!!.. Now you can proceed your Questions..
+                        </pre>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>}
+              {/* 
+              <div className="upload-file">
+              <div className="Add-file">
+                {" "}
+                <Upload />
               </div>
-            </div>
-            <div className="upload-file">
-            <div className="Add-file">
-              {" "}
-              <Upload />
-            </div>
-            
-            </div>
-            
+              uploadSuccess
+              </div>
+              */}
+              <Upload senddatatoparent={senddatatoparent} />
           </div>
         </div>
 

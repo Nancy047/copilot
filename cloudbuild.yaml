@@ -1,9 +1,8 @@
 0: gcr.io/cloud-builders/gcloud
-bash -c |
-  gcloud config set project lumen-b-ctl-047 && \
+bash -c "gcloud config set project lumen-b-ctl-047 && \
   gcloud config set compute/region us-central1 && \
   gcloud config set compute/zone us-central1-c && \
-  gcloud config set container/cluster b-ctl-dev-cluster
+  gcloud config set container/cluster b-ctl-dev-cluster"
 
 1: gcr.io/cloud-builders/docker
 build -t us-central1-docker.pkg.dev/lumen-b-ctl-047/b-ctl-047-artifact/copilot-ui:$SHORT_SHA .
